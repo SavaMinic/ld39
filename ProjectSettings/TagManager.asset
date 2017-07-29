@@ -11,6 +11,7 @@ TagManager:
   - TrainEngine
   - Ladder
   - Ground
+  - Crate
   layers:
   - Default
   - TransparentFX

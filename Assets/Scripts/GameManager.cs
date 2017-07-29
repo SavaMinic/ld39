@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 	#endregion
 
 	public PlayerController player;
+	public Transform CratesContainer;
 
 	void Awake()
 	{

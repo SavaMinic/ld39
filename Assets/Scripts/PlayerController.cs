@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
 	public float speed = 50f;
 	public float jumpPower = 150f;
 	public float maxSpeed = 100f;
+	public float speedWhileCarry = 50f;
 
 	public float kickPower = 50f;
 	public float kickUp = 10f;
@@ -75,6 +76,8 @@ public class PlayerController : MonoBehaviour
 	public bool touchingLadders;
 	public bool onLadders;
 
+	public GameObject canCarryObject;
+	public GameObject carriedObject;
 	public bool isCarrying;
 
 	void Awake()
@@ -98,6 +101,26 @@ public class PlayerController : MonoBehaviour
 			EndLadderClimb();
 		}
 
+		// just animation
+		if (!isJumping && !isKicking && !onLadders && Input.GetKeyDown(DownKey))
+		{
+			if (!isCarrying && canCarryObject != null)
+			{
+				isCarrying = true;
+				animator.SetBool("isCarrying", true);
+
+				carriedObject = canCarryObject;
+				carriedObject.GetComponent<Crate>().CarryCrate(transform);
+			}
+			else if (isCarrying && carriedObject != null)
+			{
+				isCarrying = false;
+				animator.SetBool("isCarrying", false);
+				carriedObject.GetComponent<Crate>().ReleaseCrate();
+				carriedObject = null;
+			}
+		}
+
 		if (onLadders)
 		{
 			if (Input.GetKey(JumpKey))
@@ -110,25 +133,24 @@ public class PlayerController : MonoBehaviour
 			}
 			animator.speed = Mathf.Lerp(0f, 8f, rb2D.velocity.y / maxClimbVelocity);
 		}
+		else if (isCarrying)
+		{
+			animator.speed = Mathf.Lerp(0f, 8f, Mathf.Abs(rb2D.velocity.x));
+		}
 		else
 		{
 			animator.speed = 1f;
 		}
 
-		if (isCarrying)
-		{
-			
-		}
-
 		var scaleX = Mathf.Abs(transform.localScale.x);
 		transform.localScale = new Vector2 (scaleX * (wentRightInLastFrame ? 1f : -1f), scaleX);
-		animator.SetBool("isRunning", !isJumping && !isKicking && moving);
+		animator.SetBool("isRunning", !isJumping && !isKicking && moving && !isCarrying);
 
 		animator.SetBool("isJumping", !isKicking && Mathf.Abs(rb2D.velocity.y) > 0.05f);
 		animator.SetBool("isFallingDown", !isKicking && rb2D.velocity.y < 0.5f);
 
 		// dont touch this, it's working
-		if (touchingLadders && (Input.GetKeyDown(JumpKey) || Input.GetKeyDown(DownKey)))
+		if (touchingLadders && !isCarrying && Input.GetKeyDown(JumpKey))
 		{
 			onLadders = true;
 			rb2D.gravityScale = 0f;
@@ -143,7 +165,7 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if (!isKicking && Input.GetKeyDown (KickKey))
+		if (!isKicking && !isCarrying && Input.GetKeyDown (KickKey))
 		{
 			animator.SetTrigger("kick");
 			isKicking = true;
@@ -151,11 +173,7 @@ public class PlayerController : MonoBehaviour
 			rb2D.AddForce ((wentRightInLastFrame ? Vector2.right : Vector2.left) * kickPower + (Vector2.up * kickUp));
 		}
 
-		// just animation
-		if (!isJumping && !isKicking && Input.GetKeyDown(DownKey))
-		{
-			animator.SetTrigger("pickup");
-		}
+
 
 		animator.SetBool("onLadders", onLadders);
 
@@ -172,7 +190,8 @@ public class PlayerController : MonoBehaviour
 			wentRightInLastFrame = right;
 
 			// check if we can move at all
-			rb2D.AddForce(Vector2.right * speed * (left ? -1f: 1f));
+			var currentSpeed = isCarrying ? speedWhileCarry : speed;
+			rb2D.AddForce(Vector2.right * currentSpeed * (left ? -1f: 1f));
 		}
 
 		if(rb2D.velocity.x > maxSpeed)
@@ -186,7 +205,7 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
-	protected virtual void OnCollisionStay2D(Collision2D other)
+	void OnCollisionStay2D(Collision2D other)
 	{
 		if (other.gameObject.tag == "TrainFloor")
 		{
@@ -201,6 +220,18 @@ public class PlayerController : MonoBehaviour
 			{
 				monster.Hit(wentRightInLastFrame, hitPower, hitUp);
 			}
+		}
+		else if (other.gameObject.tag == "Crate")
+		{
+			canCarryObject = other.gameObject;
+		}
+	}
+
+	void OnCollisionExit2D(Collision2D other)
+	{
+		if (other.gameObject.tag == "Crate")
+		{
+			canCarryObject = null;
 		}
 	}
 
