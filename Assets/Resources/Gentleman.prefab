@@ -55,7 +55,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 3
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 1.5
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -103,16 +103,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e53ecd1f8d1d4418999d240ea4ec0df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
-  jumpPower: 400
-  maxSpeed: 20
+  speed: 20
+  jumpPower: 450
+  maxSpeed: 25
   kickPower: 50
   kickUp: 10
   kickDuration: 0.4
   hitPower: 50
   hitUp: 10
   hitDuration: 0.4
-  isJumping: 1
+  isJumping: 0
   isKicking: 0
   goingRight: 1
   wentRightInLastFrame: 0
