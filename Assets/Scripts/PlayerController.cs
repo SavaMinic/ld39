@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
 	public bool goingRight;
 	public bool wentRightInLastFrame;
 
-	public bool touchingLadders;
+	public Ladder touchingLadders;
 	public bool onLadders;
 
 	public GameObject canCarryObject;
@@ -134,10 +134,11 @@ public class PlayerController : MonoBehaviour
 			{
 				rb2D.AddForce(Vector2.up * -ladderSpeed);
 			}
-			animator.speed = Mathf.Lerp(0f, 8f, rb2D.velocity.y / maxClimbVelocity);
+			animator.speed = Mathf.Lerp(0f, 8f, Mathf.Abs(rb2D.velocity.y) / maxClimbVelocity);
 		}
 		else if (isCarrying && !isThrowing)
 		{
+			// i expected x velocity to be normalized, but it looks fine even like this
 			animator.speed = Mathf.Lerp(0f, 8f, Mathf.Abs(rb2D.velocity.x));
 		}
 		else
@@ -150,14 +151,15 @@ public class PlayerController : MonoBehaviour
 		animator.SetBool("isRunning", !isJumping && !isKicking && moving && !isCarrying);
 
 		animator.SetBool("isJumping", !isKicking && Mathf.Abs(rb2D.velocity.y) > 0.05f);
-		animator.SetBool("isFallingDown", !isKicking && rb2D.velocity.y < 0.5f);
+		animator.SetBool("isFallingDown", !isKicking && isJumping && rb2D.velocity.y < 0.5f);
 
 		// dont touch this, it's working
-		if (touchingLadders && !isCarrying && Input.GetKeyDown(JumpKey))
+		if (touchingLadders != null && !isCarrying && (Input.GetKeyDown(JumpKey) || Input.GetKeyDown(DownKey)))
 		{
 			onLadders = true;
 			rb2D.gravityScale = 0f;
 			isJumping = isKicking = false;
+			touchingLadders.SetCeilingActive(false);
 		}
 		else
 		{
@@ -254,7 +256,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (other.tag == "Ladder")
 		{
-			touchingLadders = true;
+			touchingLadders = other.gameObject.GetComponent<Ladder>();
 		}
 		else if (other.tag == "TrainEngine")
 		{
@@ -266,7 +268,6 @@ public class PlayerController : MonoBehaviour
 	{
 		if (other.tag == "Ladder")
 		{
-			touchingLadders = false;
 			EndLadderClimb();
 		}
 	}
@@ -303,6 +304,11 @@ public class PlayerController : MonoBehaviour
 	{
 		onLadders = false;
 		rb2D.gravityScale = 1.5f;
+		if (touchingLadders != null)
+		{
+			touchingLadders.SetCeilingActive(true);
+		}
+		touchingLadders = null;
 	}
 
 	private void ReleaseCrate(bool kickIt = false)
