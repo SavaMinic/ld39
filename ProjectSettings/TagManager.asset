@@ -9,6 +9,8 @@ TagManager:
   - TrainFloor
   - TrainWall
   - TrainEngine
+  - Ladder
+  - Ground
   layers:
   - Default
   - TransparentFX

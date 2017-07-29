@@ -234,9 +234,10 @@ GameObject:
   - 4: {fileID: 654615463}
   - 33: {fileID: 654615462}
   - 23: {fileID: 654615460}
+  - 61: {fileID: 654615461}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -270,6 +271,20 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!61 &654615461
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 654615459}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.3, y: -0.45}
+  serializedVersion: 2
+  m_Size: {x: 33.56, y: 1}
 --- !u!33 &654615462
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -395,6 +410,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &872544495 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4000014285786476, guid: 2bef1acb9844740278bbf4119ef55645,
+    type: 2}
+  m_PrefabInternal: {fileID: 1761814647}
 --- !u!1 &1046508719
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,6 +514,11 @@ Prefab:
     - target: {fileID: 1000011937087170, guid: 2f3ae47b9528b411daf80a9a60754fe2, type: 2}
       propertyPath: m_Name
       value: Train2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012612633400, guid: 2f3ae47b9528b411daf80a9a60754fe2,
+        type: 2}
+      propertyPath: ladder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f3ae47b9528b411daf80a9a60754fe2, type: 2}
@@ -596,6 +621,48 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f3ae47b9528b411daf80a9a60754fe2, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &1761814647
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2051390536}
+    m_Modifications:
+    - target: {fileID: 4000014285786476, guid: 2bef1acb9844740278bbf4119ef55645, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 3.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014285786476, guid: 2bef1acb9844740278bbf4119ef55645, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014285786476, guid: 2bef1acb9844740278bbf4119ef55645, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014285786476, guid: 2bef1acb9844740278bbf4119ef55645, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014285786476, guid: 2bef1acb9844740278bbf4119ef55645, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014285786476, guid: 2bef1acb9844740278bbf4119ef55645, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0.053643152
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014285786476, guid: 2bef1acb9844740278bbf4119ef55645, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.99856025
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014285786476, guid: 2bef1acb9844740278bbf4119ef55645, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 2bef1acb9844740278bbf4119ef55645, type: 2}
+  m_IsPrefabParent: 0
 --- !u!114 &1819344162 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114000013315025312, guid: a4a1e7a776f594739abfe9a9a2773c0d,
@@ -611,7 +678,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000010644005292, guid: 93698f308814646d9a5d54eb7ab56658, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 2.641
+      value: -3.77
       objectReference: {fileID: 0}
     - target: {fileID: 4000010644005292, guid: 93698f308814646d9a5d54eb7ab56658, type: 2}
       propertyPath: m_LocalPosition.y
@@ -674,6 +741,7 @@ Transform:
   - {fileID: 1286052100}
   - {fileID: 1485814701}
   - {fileID: 2100998184}
+  - {fileID: 872544495}
   m_Father: {fileID: 0}
   m_RootOrder: 3
 --- !u!4 &2100998184 stripped
