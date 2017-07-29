@@ -8,6 +8,7 @@ TagManager:
   - Monster
   - TrainFloor
   - TrainWall
+  - TrainEngine
   layers:
   - Default
   - TransparentFX
