@@ -7,11 +7,14 @@ public class Train : MonoBehaviour
 	public Vector2 ceilingOffset;
 	public Vector2 ceilingSize;
 
-
 	public Vector2 ladderCeilingOffset;
 	public Vector2 ladderCeilingSize;
 
 	public bool ladder;
+
+	public PolygonCollider2D leftWall;
+	public PolygonCollider2D rightWall;
+	public float disableWallsIfPlayerAboveY;
 
 	void Awake()
 	{
@@ -22,5 +25,11 @@ public class Train : MonoBehaviour
 	{
 		ceilingCollider.size = hasLadder ? ladderCeilingSize : ceilingSize;
 		ceilingCollider.offset = hasLadder ? ladderCeilingOffset : ceilingOffset;
+	}
+
+	void Update()
+	{
+		var playerPosition = GameManager.Instance.player.transform.position;
+		leftWall.enabled = rightWall.enabled = playerPosition.y < disableWallsIfPlayerAboveY;
 	}
 }

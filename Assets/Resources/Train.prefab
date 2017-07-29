@@ -257,6 +257,9 @@ MonoBehaviour:
   ladderCeilingOffset: {x: -0.47, y: 1.48}
   ladderCeilingSize: {x: 3.31, y: 0.24}
   ladder: 0
+  leftWall: {fileID: 60000010606257708}
+  rightWall: {fileID: 60000010415897076}
+  disableWallsIfPlayerAboveY: 3.74
 --- !u!212 &212000010012561674
 SpriteRenderer:
   m_ObjectHideFlags: 1

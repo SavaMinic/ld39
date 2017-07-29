@@ -56,7 +56,6 @@ public class PlayerController : MonoBehaviour
 
 		if (moving && onLadders)
 		{
-			Debug.Log("No ladder");
 			EndLadderClimb();
 		}
 
@@ -87,7 +86,6 @@ public class PlayerController : MonoBehaviour
 		// dont touch this, it's working
 		if (touchingLadders && (Input.GetKeyDown(JumpKey) || Input.GetKeyDown(DownKey)))
 		{
-			Debug.Log("ON LADDER");
 			onLadders = true;
 			rb2D.gravityScale = 0f;
 			isJumping = isKicking = false;
@@ -154,7 +152,6 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (other.gameObject.tag == "Monster" && isKicking)
 		{
-			Debug.Log("MONSTER");
 			var monster = other.gameObject.GetComponent<Monster>();
 			if (monster != null)
 			{
@@ -168,6 +165,10 @@ public class PlayerController : MonoBehaviour
 		if (other.tag == "Ladder")
 		{
 			touchingLadders = true;
+		}
+		else if (other.tag == "TrainEngine")
+		{
+			Debug.Log("ENGINE");
 		}
 	}
 
