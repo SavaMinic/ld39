@@ -3,12 +3,49 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
+
+	#region READ ME FIRST
+
+	// THIS SHOULD BE DONE WITH SOME STATE MACHINE, BUT AINT NOBODY GOT TIME FOR THAT
+	/*
+			............--:------....................................```````````.../ddhddsyyyssoysssoo+ooo+++hd/
+			```````````````...........-........-.....-````````````                   -osooo+/+/------..:-...--yd
+			.```````````````````````````````````````````..`````.`.   `..``.`     `.    `/:..```````````````...:o
+			.`.`````````..`````````````````````````````....`..``` `-/+++++++ohhyo+//-.` `.-:/:.````````````...-:
+			......``.`.`....``..............................--../yhdddddmmmmdhdNNmhyo:``.//so+.````..`.....----:
+			-.--..``.`........----................-......-..--ommyyhdmddhdNNNmdhdhhyyhy+:+hdh+.``.````.....-:+`.
+			---:--.-----------------------------------------:dmmdysdmmNmhydNNNmmmddhyshso+yh:-..`.`.``.----:+o..
+			-----:------------------------------------------hmmNhyysydmmdooymNNMNNNmdhydo+o/:-------------:/+shh
+			::::::-:::::::::::::::::::::::::::::::::::::::::mNNhsyhhhyyyyyyyyssydNMNNNmdmy+o//::/:/:::::::///+oo
+			::/::::::::::/::/://::/:::://::/::::/:::///::///mmdsydmNNmdhmNNNdyo+//ohMMMNmd/y++//////////:://////
+			////:///////:::::::::////::/::/:////////////////ydhmmNNNmms/odNNNmdyys/:omMMNNmmhysyssssooo+++++++/+
+			++++/+/++/////////////////////////++++/+++++++oooyydmdhhhs:-/+syhhyo/----/dmmNNmmmddddddhhhyyysssoos
+			sosoossossooooooooo++++++++oo++++oo+yhhhhdssssyyyo/++osso:-.::+o+/:-....::/+hddNdmNmNNmmmmmmdddhhhyy
+			hyyhyyyhyyysssssssssosssssoosssossoosssssyyyyyhhhsosydhyyyyssyyymdhyo+////:-/ooNNNNNNNmmmmmmmmddddhh
+			hhhhhhhhhyyyyyyyyyyyyyyyyyssssssssssssssssyyhhhddhddmNNNNNNmdyssymNNmhyo+///:+oNNNNNmmNNmmmmmmmddddd
+			hhhhhdhhhhhhysyhhhhyhhyyhyyhyhhhyhhyhyyyyyyhhhhhhhmNNNdhyyyso+//+shNNmdsoo+ooddNmNmmNNNmmmmddddhdddd
+			yhhhhhddddmmdhhhhhhhyhhyyyhhhhyyyysss+yssyyyyhhhhydNNmmmdyss/ooymNddmmhyssosshydmmmmmmmmNmdhhhhhhhhh
+			mmmddmNNNNNNNNNNNNNNNNNNNNNNNNNNmmmmmmmmmmmmmmmmmmddmmhmmsso+:-:/+oydhhyysssdNNNmmmmmmmmmmmmmmmmmmmm
+			mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmddddddhyssoosoooossyhhhhhysymmmmmmmmmmmddmddmmmmmmmd
+			dddddddddddddddddddmmmmdmmmmmmmmmmmmmddddddddddhdhhhhhddmmNmmmdhyyyhhdddhyoshdddddddddhhhhhhhhhhhhhh
+			yyyyyyyhhhhhhhhhhhhhhhdddddddmmmmdddddddddddddddddddddddddmmddhhhdmmmmddhhosyyyyyyyyyyyysssssssoooos
+			ooooooosssssyyyyssooossssyyyyyyyyyyyyyyyysssssssssyyo/odmmNNNNNNNNNNmmddhyo--:/++//////++////////+oo
+			//://++//://///////::://///:://///://:::::::::---.../+odmmNNMMMMNNNNmdhysss++`+/os.-://///:::::::::/
+			::///+++++++++++ooooosssssssssssssoooo+:..``.....--/s+ydmmmNNNNNNNmdhhhyyyyyo+/:/:-```.-/+oooosooooo
+			ssssssssssssssssyyyyyyyyyyysooooooooo/....--:::::..oooyhdmmNNNNNmmmdddhhsosyyys-/+-`````````.-//+ooo
+			sooooooo++++++ooo++++oooo++++///++++/:::::/++++/.`.yosyhhdmmNNmmmmmddhhsooooo+:-/:/-`....-..```` `.:
+			::::::::::-::::::::/:::::::::::::::/+++++++oo++:`..sosyyhhddmmmddddhhhyso+++//:-+-:/...-::::-.```` .
+			----------.----.---.--------------:+ooooooooo+/...-ysosyyhhddmmdddhhyyysso+///:::::/:..--///:-..```-
+
+		 * */
+
+	#endregion
+
 	protected KeyCode LeftKey { get { return KeyCode.A; } }
 	protected KeyCode RightKey { get { return KeyCode.D; } }
 	protected KeyCode JumpKey { get { return KeyCode.W; } }
 	protected KeyCode KickKey { get { return KeyCode.Space; } }
 	protected KeyCode DownKey { get { return KeyCode.S; } }
-
 
 
 	public float speed = 50f;
@@ -37,6 +74,8 @@ public class PlayerController : MonoBehaviour
 
 	public bool touchingLadders;
 	public bool onLadders;
+
+	public bool isCarrying;
 
 	void Awake()
 	{
@@ -74,6 +113,11 @@ public class PlayerController : MonoBehaviour
 		else
 		{
 			animator.speed = 1f;
+		}
+
+		if (isCarrying)
+		{
+			
 		}
 
 		var scaleX = Mathf.Abs(transform.localScale.x);
