@@ -323,7 +323,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000011330712280, guid: a4a1e7a776f594739abfe9a9a2773c0d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.563
+      value: 2.06
       objectReference: {fileID: 0}
     - target: {fileID: 4000011330712280, guid: a4a1e7a776f594739abfe9a9a2773c0d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -600,42 +600,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2f3ae47b9528b411daf80a9a60754fe2, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1819344156 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000011022787822, guid: a4a1e7a776f594739abfe9a9a2773c0d,
-    type: 2}
-  m_PrefabInternal: {fileID: 697915254}
---- !u!61 &1819344157
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1819344156}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 3.3300002, y: 5.38}
---- !u!50 &1819344161
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1819344156}
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!1001 &2007812760
 Prefab:
   m_ObjectHideFlags: 0
@@ -649,7 +613,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000010644005292, guid: 93698f308814646d9a5d54eb7ab56658, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.14
+      value: 1.65
       objectReference: {fileID: 0}
     - target: {fileID: 4000010644005292, guid: 93698f308814646d9a5d54eb7ab56658, type: 2}
       propertyPath: m_LocalPosition.z

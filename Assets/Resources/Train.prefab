@@ -20,9 +20,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010996610752}
   - 212: {fileID: 212000012272478292}
+  - 61: {fileID: 61000011934702594}
   m_Layer: 0
   m_Name: train-right
-  m_TagString: Untagged
+  m_TagString: TrainWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35,7 +36,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000010255048818}
-  - 61: {fileID: 61000010569098088}
   m_Layer: 0
   m_Name: Train
   m_TagString: Untagged
@@ -52,9 +52,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013899802170}
   - 212: {fileID: 212000010532639386}
+  - 61: {fileID: 61000011188439880}
   m_Layer: 0
   m_Name: train-left
-  m_TagString: Untagged
+  m_TagString: TrainWall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68,9 +69,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011608534454}
   - 212: {fileID: 212000010012561674}
+  - 61: {fileID: 61000011961959498}
   m_Layer: 0
   m_Name: train
-  m_TagString: Untagged
+  m_TagString: TrainFloor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011937087170}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.62, y: 2, z: 0}
+  m_LocalPosition: {x: 7.94, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -130,12 +132,40 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000010255048818}
   m_RootOrder: 1
---- !u!61 &61000010569098088
+--- !u!61 &61000011188439880
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011937087170}
+  m_GameObject: {fileID: 1000012157776012}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: -2.7, y: 1.74}
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 1.84}
+--- !u!61 &61000011934702594
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011628765528}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 2.43, y: 1.74}
+  serializedVersion: 2
+  m_Size: {x: 0.64, y: 1.84}
+--- !u!61 &61000011961959498
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013320090184}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -143,7 +173,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: -0.16, y: -1.13}
   serializedVersion: 2
-  m_Size: {x: 6.24, y: 0.52}
+  m_Size: {x: 6.6, y: 0.52}
 --- !u!212 &212000010012561674
 SpriteRenderer:
   m_ObjectHideFlags: 1

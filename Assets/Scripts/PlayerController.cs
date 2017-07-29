@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour
 	{
 		rb2D = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+
+		isJumping = isKicking = false;
 	}
 
 	void Update()
@@ -44,9 +46,10 @@ public class PlayerController : MonoBehaviour
 
 		var scaleX = Mathf.Abs(transform.localScale.x);
 		transform.localScale = new Vector2 (scaleX * (wentRightInLastFrame ? 1f : -1f), scaleX);
-		//animator.SetBool("isRunning", !isJumping && !isKicking && (Input.GetKey (LeftKey) || Input.GetKey (RightKey)));
+		animator.SetBool("isRunning", !isJumping && !isKicking && (Input.GetKey(LeftKey) || Input.GetKey(RightKey)));
 
-		//animator.SetBool("isJumping", !isKicking && Mathf.Abs(rb2D.velocity.y) > 0.05f);
+		animator.SetBool("isJumping", !isKicking && Mathf.Abs(rb2D.velocity.y) > 0.05f);
+		animator.SetBool("isFallingDown", !isKicking && rb2D.velocity.y < 0.5f);
 
 		// dont touch this, it's working
 		if ((!isJumping || Mathf.Abs(rb2D.velocity.y) < 0.05f) && Input.GetKeyDown(JumpKey))
@@ -57,15 +60,16 @@ public class PlayerController : MonoBehaviour
 
 		if (!isKicking && Input.GetKeyDown (KickKey))
 		{
-			//animator.SetTrigger("kick");
+			animator.SetTrigger("kick");
 			isKicking = true;
 			rb2D.AddForce ((wentRightInLastFrame ? Vector2.right : Vector2.left) * kickPower + (Vector2.up * kickUp));
 			Invoke("FinishKick", kickDuration);
 		}
 
 		// just animation
-		if (!isJumping && !isKicking && Input.GetKeyDown(PickUpKey)) {
-			//animator.SetTrigger("punch");
+		if (!isJumping && !isKicking && Input.GetKeyDown(PickUpKey))
+		{
+			animator.SetTrigger("punch");
 		}
 	}
 
@@ -91,6 +95,16 @@ public class PlayerController : MonoBehaviour
 		if(rb2D.velocity.x < -maxSpeed)
 		{
 			rb2D.velocity =  new Vector2(-maxSpeed, rb2D.velocity.y);
+		}
+	}
+
+	protected virtual void OnCollisionStay2D(Collision2D other)
+	{
+		if (other.gameObject.tag == "TrainFloor")
+		{
+			// TODO: THIS IS CALLED ALL THE TIME, SOMETHING MESSED UP WITH COLLIDERS
+			// changed so jumping animation depends on vertical velocity
+			isJumping = false;
 		}
 	}
 
