@@ -264,6 +264,14 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (other.tag == "Ladder")
+		{
+			touchingLadders = other.gameObject.GetComponent<Ladder>();
+		}
+	}
+
 	void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.tag == "Ladder")
