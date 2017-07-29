@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012008239706}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.48, y: 1.29, z: 0}
+  m_LocalPosition: {x: 1.46, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -117,7 +117,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 8, y: 3.92}
+  m_Size: {x: 10.79, y: 3.92}
 --- !u!114 &114000010675785964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,6 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalBody: {fileID: 50000011961757390}
   crateRenderer: {fileID: 212000011083640042}
+  kickPower: 1000
+  kickUp: 1000
 --- !u!212 &212000011083640042
 SpriteRenderer:
   m_ObjectHideFlags: 1

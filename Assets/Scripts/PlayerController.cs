@@ -41,12 +41,13 @@ public class PlayerController : MonoBehaviour
 
 	#endregion
 
+	#region Fields/Properties
+
 	protected KeyCode LeftKey { get { return KeyCode.A; } }
 	protected KeyCode RightKey { get { return KeyCode.D; } }
 	protected KeyCode JumpKey { get { return KeyCode.W; } }
 	protected KeyCode KickKey { get { return KeyCode.Space; } }
 	protected KeyCode DownKey { get { return KeyCode.S; } }
-
 
 	public float speed = 50f;
 	public float jumpPower = 150f;
@@ -79,6 +80,11 @@ public class PlayerController : MonoBehaviour
 	public GameObject canCarryObject;
 	public GameObject carriedObject;
 	public bool isCarrying;
+	public bool isThrowing;
+
+	#endregion Fields/Properties
+
+	#region Unity methods
 
 	void Awake()
 	{
@@ -114,10 +120,7 @@ public class PlayerController : MonoBehaviour
 			}
 			else if (isCarrying && carriedObject != null)
 			{
-				isCarrying = false;
-				animator.SetBool("isCarrying", false);
-				carriedObject.GetComponent<Crate>().ReleaseCrate();
-				carriedObject = null;
+				ReleaseCrate();
 			}
 		}
 
@@ -133,7 +136,7 @@ public class PlayerController : MonoBehaviour
 			}
 			animator.speed = Mathf.Lerp(0f, 8f, rb2D.velocity.y / maxClimbVelocity);
 		}
-		else if (isCarrying)
+		else if (isCarrying && !isThrowing)
 		{
 			animator.speed = Mathf.Lerp(0f, 8f, Mathf.Abs(rb2D.velocity.x));
 		}
@@ -165,21 +168,29 @@ public class PlayerController : MonoBehaviour
 			}
 		}
 
-		if (!isKicking && !isCarrying && Input.GetKeyDown (KickKey))
+		if (!isKicking && Input.GetKeyDown(KickKey))
 		{
-			animator.SetTrigger("kick");
-			isKicking = true;
-			kickCollider.gameObject.transform.localScale = new Vector3((wentRightInLastFrame ? -1f : 1f), 1f, 1f);
-			rb2D.AddForce ((wentRightInLastFrame ? Vector2.right : Vector2.left) * kickPower + (Vector2.up * kickUp));
+			if (!isCarrying)
+			{
+				animator.SetTrigger("kick");
+				isKicking = true;
+				kickCollider.gameObject.transform.localScale = new Vector3((wentRightInLastFrame ? -1f : 1f), 1f, 1f);
+				rb2D.AddForce((wentRightInLastFrame ? Vector2.right : Vector2.left) * kickPower + (Vector2.up * kickUp));
+			}
+			else if (carriedObject != null)
+			{
+				isThrowing = true;
+				animator.speed = 1f;
+				animator.SetTrigger("throws");
+			}
 		}
-
 
 
 		animator.SetBool("onLadders", onLadders);
 
 	}
 
-	protected virtual void FixedUpdate()
+	void FixedUpdate()
 	{
 
 		bool left = Input.GetKey(LeftKey);
@@ -204,6 +215,10 @@ public class PlayerController : MonoBehaviour
 			rb2D.velocity =  new Vector2(-maxSpeed, rb2D.velocity.y);
 		}
 	}
+
+	#endregion Unity methods
+
+	#region Collisions
 
 	void OnCollisionStay2D(Collision2D other)
 	{
@@ -256,6 +271,10 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	#endregion Collisions
+
+	#region Animation events
+
 	// called from animation
 	private void DoKick()
 	{
@@ -269,9 +288,30 @@ public class PlayerController : MonoBehaviour
 		kickCollider.enabled = false;
 	}
 
+	// called from animation
+	private void ThrowCrate()
+	{
+		isThrowing = false;
+		ReleaseCrate(true);
+	}
+
+	#endregion Animation events
+
+	#region Helpers
+
 	private void EndLadderClimb()
 	{
 		onLadders = false;
 		rb2D.gravityScale = 1.5f;
 	}
+
+	private void ReleaseCrate(bool kickIt = false)
+	{
+		isCarrying = false;
+		animator.SetBool("isCarrying", false);
+		carriedObject.GetComponent<Crate>().ReleaseCrate(kickIt, wentRightInLastFrame);
+		carriedObject = null;
+	}
+
+	#endregion Helpers
 }
