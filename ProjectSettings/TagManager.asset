@@ -41,3 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 1763427517
+    locked: 0
+  - name: Train
+    uniqueID: 3875117775
+    locked: 0
+  - name: ItemsBack
+    uniqueID: 3874387861
+    locked: 0
+  - name: Chars
+    uniqueID: 2194218229
+    locked: 0
+  - name: ItemsFront
+    uniqueID: 3273783593
+    locked: 0
+  - name: TrainFront
+    uniqueID: 991917235
+    locked: 0
