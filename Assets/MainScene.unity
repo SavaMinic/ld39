@@ -921,6 +921,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1819344162}
   CratesContainer: {fileID: 2104396999}
+  maxPower: 100
+  powerDecreaseOverTime: 3
 --- !u!4 &1046508721
 Transform:
   m_ObjectHideFlags: 0

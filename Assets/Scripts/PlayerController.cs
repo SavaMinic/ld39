@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
 		}
 		else
 		{
-			if ((!isJumping || Mathf.Abs(rb2D.velocity.y) < 0.05f) && Input.GetKeyDown(JumpKey))
+			if ((!isJumping || Mathf.Abs(rb2D.velocity.y) < 0.05f) && !isCarrying && Input.GetKeyDown(JumpKey))
 			{
 				isJumping = true;
 				rb2D.AddForce(Vector2.up * jumpPower);
@@ -319,7 +319,7 @@ public class PlayerController : MonoBehaviour
 		touchingLadders = null;
 	}
 
-	private void ReleaseCrate(bool kickIt = false)
+	public void ReleaseCrate(bool kickIt = false)
 	{
 		isCarrying = false;
 		animator.SetBool("isCarrying", false);
