@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
 		animator = GetComponent<Animator>();
 
 		isJumping = isKicking = false;
-		kickCollider.enabled = false;
+		//kickCollider.enabled = false;
 	}
 
 	void Update()
@@ -119,11 +119,18 @@ public class PlayerController : MonoBehaviour
 				animator.SetBool("isCarrying", true);
 
 				carriedObject = canCarryObject;
-				carriedObject.GetComponent<Crate>().CarryCrate(transform);
+
+				var crate = carriedObject.GetComponent<Crate>();
+				if (crate != null)
+					crate.CarryCrate(transform);
+				
+				var monster = carriedObject.GetComponentInParent<Monster>();
+				if (monster != null)
+					monster.CarryMonster(transform);
 			}
 			else if (isCarrying && carriedObject != null)
 			{
-				ReleaseCrate();
+				ReleaseCarriedObject();
 			}
 		}
 
@@ -179,7 +186,6 @@ public class PlayerController : MonoBehaviour
 			{
 				animator.SetTrigger("kick");
 				isKicking = true;
-				kickCollider.gameObject.transform.localScale = new Vector3((wentRightInLastFrame ? -1f : 1f), 1f, 1f);
 				rb2D.AddForce((wentRightInLastFrame ? Vector2.right : Vector2.left) * kickPower + (Vector2.up * kickUp));
 			}
 			else if (carriedObject != null)
@@ -257,6 +263,18 @@ public class PlayerController : MonoBehaviour
 		}
 	}
 
+	public void TouchingMonster(GameObject other)
+	{
+		if (isKicking)
+		{
+			var monster = other.GetComponent<Monster>();
+			if (monster != null)
+			{
+				monster.Hit(wentRightInLastFrame, hitPower, hitUp);
+			}
+		}
+	}
+
 	void OnCollisionExit2D(Collision2D other)
 	{
 		if (other.gameObject.tag == "Crate")
@@ -279,6 +297,10 @@ public class PlayerController : MonoBehaviour
 		{
 			GameManager.Instance.EndGame(GameManager.EndType.DeathByRailroad);
 		}
+		else if (other.tag == "DeadMonster")
+		{
+			canCarryObject = other.gameObject;
+		}
 	}
 
 	void OnTriggerStay2D(Collider2D other)
@@ -295,6 +317,10 @@ public class PlayerController : MonoBehaviour
 		{
 			EndLadderClimb();
 		}
+		else if (other.tag == "DeadMonster")
+		{
+			canCarryObject = null;
+		}
 	}
 
 	#endregion Collisions
@@ -304,21 +330,22 @@ public class PlayerController : MonoBehaviour
 	// called from animation
 	private void DoKick()
 	{
-		kickCollider.enabled = true;
+		//kickCollider.enabled = true;
+		//kickCollider.offset.Set(wentRightInLastFrame ? 2f : -2f, kickCollider.offset.y);
 	}
 
 	// called from animation
 	private void FinishKick()
 	{
 		isKicking = false;
-		kickCollider.enabled = false;
+		//kickCollider.enabled = false;
 	}
 
 	// called from animation
 	private void ThrowCrate()
 	{
 		isThrowing = false;
-		ReleaseCrate(true);
+		ReleaseCarriedObject(true);
 	}
 
 	#endregion Animation events
@@ -336,11 +363,19 @@ public class PlayerController : MonoBehaviour
 		touchingLadders = null;
 	}
 
-	public void ReleaseCrate(bool kickIt = false)
+	public void ReleaseCarriedObject(bool kickIt = false)
 	{
 		isCarrying = false;
 		animator.SetBool("isCarrying", false);
-		carriedObject.GetComponent<Crate>().ReleaseCrate(kickIt, wentRightInLastFrame);
+
+		var crate = carriedObject.GetComponent<Crate>();
+		if (crate != null)
+			crate.ReleaseCrate(kickIt, wentRightInLastFrame);
+		
+		var monster = carriedObject.GetComponentInParent<Monster>();
+		if (monster != null)
+			monster.ReleaseMonster(kickIt, wentRightInLastFrame);
+		
 		carriedObject = null;
 	}
 

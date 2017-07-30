@@ -40,9 +40,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000013201225394}
   - 61: {fileID: 61000013353918986}
+  - 114: {fileID: 114000010703515672}
   m_Layer: 0
   m_Name: KickCollider
-  m_TagString: Untagged
+  m_TagString: KickCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,11 +115,11 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 2, y: -1.6}
   serializedVersion: 2
-  m_Size: {x: 4, y: 0.86}
+  m_Size: {x: 4, y: 2.21}
 --- !u!95 &95000014071746456
 Animator:
   serializedVersion: 3
@@ -136,6 +137,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114000010703515672
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012229594646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3bfabc0fc650430e8f10db05fd8bd8f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000013315025312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -151,10 +163,10 @@ MonoBehaviour:
   jumpPower: 450
   maxSpeed: 25
   speedWhileCarry: 10
-  kickPower: 50
-  kickUp: 10
-  hitPower: 100
-  hitUp: 150
+  kickPower: 30
+  kickUp: 30
+  hitPower: 10
+  hitUp: 10
   hitDuration: 0.4
   ladderSpeed: 10
   maxClimbVelocity: 10
@@ -163,11 +175,12 @@ MonoBehaviour:
   isKicking: 0
   goingRight: 1
   wentRightInLastFrame: 0
-  touchingLadders: 0
+  touchingLadders: {fileID: 0}
   onLadders: 0
   canCarryObject: {fileID: 0}
   carriedObject: {fileID: 0}
   isCarrying: 0
+  isThrowing: 0
 --- !u!212 &212000011434675854
 SpriteRenderer:
   m_ObjectHideFlags: 1

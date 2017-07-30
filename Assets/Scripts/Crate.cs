@@ -64,7 +64,7 @@ public class Crate : MonoBehaviour
 			isDestroyed = true;
 			if (isCarried)
 			{
-				GameManager.Instance.player.ReleaseCrate();
+				GameManager.Instance.player.ReleaseCarriedObject();
 			}
 			StartCoroutine(Explode());
 			if (other.tag == "TrainEngine")

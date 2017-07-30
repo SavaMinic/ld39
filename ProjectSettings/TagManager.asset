@@ -12,6 +12,9 @@ TagManager:
   - Ladder
   - Ground
   - Crate
+  - MonsterLimit
+  - DeadMonster
+  - KickCollider
   layers:
   - Default
   - TransparentFX

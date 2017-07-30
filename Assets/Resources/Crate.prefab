@@ -179,7 +179,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 10.79, y: 3.92}
+  m_Size: {x: 12.8, y: 3.92}
 --- !u!114 &114000010675785964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -196,6 +196,7 @@ MonoBehaviour:
   explodeParticles: {fileID: 198000013867322628}
   kickPower: 1000
   kickUp: 1000
+  powerWhenBurned: 25
 --- !u!198 &198000013774859834
 ParticleSystem:
   m_ObjectHideFlags: 1

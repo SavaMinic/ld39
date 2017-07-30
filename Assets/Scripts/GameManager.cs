@@ -79,11 +79,14 @@ public class GameManager : MonoBehaviour
 		powerIncreaseLabel.GetComponent<CanvasRenderer>().SetAlpha(0f);
 		paralax = FindObjectsOfType<TextureOffsetScroll>();
 
-		State = GameState.MainMenu;
+		//State = GameState.MainMenu;
+		//startPanel.gameObject.SetActive(true);
+		StartNewGame();
 	}
 
 	public void StartNewGame()
 	{
+		startPanel.gameObject.SetActive(false);
 		endPanel.gameObject.SetActive(false);
 		State = GameState.Playing;
 		Power = maxPower;
@@ -134,7 +137,6 @@ public class GameManager : MonoBehaviour
 		{
 			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
 			{
-				startPanel.gameObject.SetActive(false);
 				StartNewGame();
 			}
 		}
