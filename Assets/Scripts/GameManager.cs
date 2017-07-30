@@ -34,18 +34,23 @@ public class GameManager : MonoBehaviour
 	public bool IsPlaying { get { return State == GameState.Playing; } }
 
 	public float Power { get; private set; }
+	public float DistanceRemaining { get; private set; }
 
 	public PlayerController player;
 	public Transform CratesContainer;
 
 	public float maxPower = 100f;
 	public float powerDecreaseOverTime = 3f;
-
 	public Text powerLabel;
 	public Color normalPowerColor;
 	public Color warningPowerColor;
 	public Color dangerPowerColor;
 	public Text powerIncreaseLabel;
+
+
+	public float destinationDistance = 15000f;
+	public float distanceCoveredOverTime = 100f;
+	public Text destinationLabel;
 
 	void Awake()
 	{
@@ -59,6 +64,7 @@ public class GameManager : MonoBehaviour
 	{
 		State = GameState.Playing;
 		Power = maxPower;
+		DistanceRemaining = destinationDistance;
 	}
 
 	public static string ToRGBHex(Color c)
@@ -77,10 +83,16 @@ public class GameManager : MonoBehaviour
 		if (IsPlaying)
 		{
 			Power -= powerDecreaseOverTime * Time.deltaTime;
-			if (Power <= 0)
+			if (Power <= 0f)
 			{
 				Power = 0f;
-				EndGame();
+				EndGame(false);
+			}
+			DistanceRemaining -= distanceCoveredOverTime * Time.deltaTime;
+			if (DistanceRemaining <= 0f)
+			{
+				DistanceRemaining = 0f;
+				EndGame(true);
 			}
 		}
 
@@ -104,6 +116,8 @@ public class GameManager : MonoBehaviour
 			powerColor = dangerPowerColor;
 		}
 		powerLabel.text = string.Format("Power: <color={1}><b>{0:P1}</b></color>", Power / maxPower, ToRGBHex(powerColor));
+
+		destinationLabel.text = string.Format("{0:0.00}km to Belgrade", DistanceRemaining / 1000f);
 	}
 
 	public void AddToPower(float amount)
@@ -112,7 +126,7 @@ public class GameManager : MonoBehaviour
 		StartCoroutine(ShowIncrease(amount));
 	}
 
-	public void EndGame()
+	public void EndGame(bool isWon)
 	{
 		State = GameState.End;
 		Debug.Log("END");
