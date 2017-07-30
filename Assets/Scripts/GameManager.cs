@@ -30,6 +30,15 @@ public class GameManager : MonoBehaviour
 		End
 	}
 
+	public enum EndType
+	{
+		Win,
+		DeathInEngine,
+		DeathByMonsters,
+		DeathByPower,
+		DeathByRailroad,
+	}
+
 	public GameState State { get; private set; }
 	public bool IsPlaying { get { return State == GameState.Playing; } }
 
@@ -52,19 +61,35 @@ public class GameManager : MonoBehaviour
 	public float distanceCoveredOverTime = 100f;
 	public Text destinationLabel;
 
+	public RectTransform endPanel;
+	public Text winText;
+	public Text loseText;
+	public Text powerText;
+	public Text railroadText;
+	public Text engineText;
+
+	private TextureOffsetScroll[] paralax;
+
 	void Awake()
 	{
 		Application.targetFrameRate = 60;
 		powerIncreaseLabel.GetComponent<CanvasRenderer>().SetAlpha(0f);
+		paralax = FindObjectsOfType<TextureOffsetScroll>();
 
 		StartNewGame();
 	}
 
 	public void StartNewGame()
 	{
+		endPanel.gameObject.SetActive(false);
 		State = GameState.Playing;
 		Power = maxPower;
 		DistanceRemaining = destinationDistance;
+
+		for (int i = 0; i < paralax.Length; i++)
+		{
+			paralax[i].SpeedActive(true);
+		}
 	}
 
 	public static string ToRGBHex(Color c)
@@ -86,13 +111,13 @@ public class GameManager : MonoBehaviour
 			if (Power <= 0f)
 			{
 				Power = 0f;
-				EndGame(false);
+				EndGame(EndType.DeathByPower);
 			}
 			DistanceRemaining -= distanceCoveredOverTime * Time.deltaTime;
 			if (DistanceRemaining <= 0f)
 			{
 				DistanceRemaining = 0f;
-				EndGame(true);
+				EndGame(EndType.Win);
 			}
 		}
 
@@ -117,7 +142,7 @@ public class GameManager : MonoBehaviour
 		}
 		powerLabel.text = string.Format("Power: <color={1}><b>{0:P1}</b></color>", Power / maxPower, ToRGBHex(powerColor));
 
-		destinationLabel.text = string.Format("{0:0.00}km to Belgrade", DistanceRemaining / 1000f);
+		destinationLabel.text = string.Format("{0:0.00}km to Eden", DistanceRemaining / 1000f);
 	}
 
 	public void AddToPower(float amount)
@@ -126,10 +151,22 @@ public class GameManager : MonoBehaviour
 		StartCoroutine(ShowIncrease(amount));
 	}
 
-	public void EndGame(bool isWon)
+	public void EndGame(EndType endType)
 	{
 		State = GameState.End;
-		Debug.Log("END");
+
+		winText.gameObject.SetActive(endType == EndType.Win);
+		loseText.gameObject.SetActive(endType == EndType.DeathByMonsters);
+		powerText.gameObject.SetActive(endType == EndType.DeathByPower);
+		railroadText.gameObject.SetActive(endType == EndType.DeathByRailroad);
+		engineText.gameObject.SetActive(endType == EndType.DeathInEngine);
+		endPanel.gameObject.SetActive(true);
+
+		// stop parallax
+		for (int i = 0; i < paralax.Length; i++)
+		{
+			paralax[i].SpeedActive(false);
+		}
 	}
 
 	private IEnumerator ShowIncrease(float amount)

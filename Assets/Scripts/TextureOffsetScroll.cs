@@ -9,8 +9,11 @@ public class TextureOffsetScroll : MonoBehaviour
 
 	private Renderer myRenderer;
 
-	void Start()
+	private float initialSpeed;
+
+	void Awake()
 	{
+		initialSpeed = scrollSpeed;
 		myRenderer = GetComponent<Renderer>();
 		savedOffset = myRenderer.sharedMaterial.GetTextureOffset("_MainTex");
 	}
@@ -25,5 +28,10 @@ public class TextureOffsetScroll : MonoBehaviour
 	void OnDisable()
 	{
 		myRenderer.sharedMaterial.SetTextureOffset("_MainTex", savedOffset);
+	}
+
+	public void SpeedActive(bool isActive)
+	{
+		scrollSpeed = isActive ? initialSpeed : 0f;
 	}
 }

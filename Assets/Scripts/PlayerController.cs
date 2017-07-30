@@ -222,6 +222,14 @@ public class PlayerController : MonoBehaviour
 
 	#region Collisions
 
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.tag == "Ground")
+		{
+			GameManager.Instance.EndGame(GameManager.EndType.DeathByRailroad);
+		}
+	}
+
 	void OnCollisionStay2D(Collision2D other)
 	{
 		if (other.gameObject.tag == "TrainFloor")
@@ -260,7 +268,11 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (other.tag == "TrainEngine")
 		{
-			Debug.Log("ENGINE");
+			GameManager.Instance.EndGame(GameManager.EndType.DeathInEngine);
+		}
+		else if (other.tag == "Ground")
+		{
+			GameManager.Instance.EndGame(GameManager.EndType.DeathByRailroad);
 		}
 	}
 
