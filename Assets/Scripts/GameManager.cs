@@ -71,13 +71,15 @@ public class GameManager : MonoBehaviour
 
 	private TextureOffsetScroll[] paralax;
 
+	public RectTransform startPanel;
+
 	void Awake()
 	{
 		Application.targetFrameRate = 60;
 		powerIncreaseLabel.GetComponent<CanvasRenderer>().SetAlpha(0f);
 		paralax = FindObjectsOfType<TextureOffsetScroll>();
 
-		StartNewGame();
+		State = GameState.MainMenu;
 	}
 
 	public void StartNewGame()
@@ -126,6 +128,13 @@ public class GameManager : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
 			{
 				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+			}
+		}
+		else if (State == GameState.MainMenu)
+		{
+			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+			{
+				startPanel.gameObject.SetActive(false);
 				StartNewGame();
 			}
 		}
@@ -185,9 +194,9 @@ public class GameManager : MonoBehaviour
 	private IEnumerator ShowIncrease(float amount)
 	{
 		powerIncreaseLabel.text = "+" + amount;
-		powerIncreaseLabel.CrossFadeAlpha(1f, .15f, false);
+		powerIncreaseLabel.CrossFadeAlpha(1f, .2f, false);
 
-		yield return new WaitForSeconds(0.5f);
+		yield return new WaitForSeconds(0.8f);
 
 		powerIncreaseLabel.CrossFadeAlpha(0f, .2f, false);
 	}
