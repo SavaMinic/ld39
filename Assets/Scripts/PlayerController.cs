@@ -97,6 +97,9 @@ public class PlayerController : MonoBehaviour
 
 	void Update()
 	{
+		if (!GameManager.Instance.IsPlaying)
+			return;
+
 		// control the rotation
 		goingRight = !Input.GetKey(LeftKey);
 
@@ -194,7 +197,9 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate()
 	{
-
+		if (!GameManager.Instance.IsPlaying)
+			return;
+		
 		bool left = Input.GetKey(LeftKey);
 		bool right = Input.GetKey(RightKey);
 

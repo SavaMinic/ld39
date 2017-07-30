@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -120,8 +121,20 @@ public class GameManager : MonoBehaviour
 				EndGame(EndType.Win);
 			}
 		}
+		else if (State == GameState.End)
+		{
+			if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+			{
+				SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+				StartNewGame();
+			}
+		}
 
-		// update ui
+		UpdateUI();
+	}
+
+	private void UpdateUI()
+	{
 		var powerPercent = Power / maxPower;
 		Color powerColor;
 		if (powerPercent > 0.85f)
