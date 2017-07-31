@@ -25,6 +25,7 @@ public class Monster : MonoBehaviour
 	public float kickUp = 10f;
 
 	public bool isCarried;
+	public bool isDestroyed;
 
 	void Awake()
 	{
@@ -138,6 +139,10 @@ public class Monster : MonoBehaviour
 
 	public void Die(bool addPower = false)
 	{
+		if (isDestroyed)
+			return;
+		isDestroyed = true;
+
 		if (isCarried)
 		{
 			GameManager.Instance.player.ReleaseCarriedObject();
