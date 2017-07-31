@@ -73,15 +73,17 @@ public class GameManager : MonoBehaviour
 
 	public RectTransform startPanel;
 
+	public RawImage[] hearts;
+
 	void Awake()
 	{
 		Application.targetFrameRate = 60;
 		powerIncreaseLabel.GetComponent<CanvasRenderer>().SetAlpha(0f);
 		paralax = FindObjectsOfType<TextureOffsetScroll>();
 
-		//State = GameState.MainMenu;
-		//startPanel.gameObject.SetActive(true);
-		StartNewGame();
+		State = GameState.MainMenu;
+		startPanel.gameObject.SetActive(true);
+		//StartNewGame();
 	}
 
 	public void StartNewGame()
@@ -167,6 +169,11 @@ public class GameManager : MonoBehaviour
 		powerLabel.text = string.Format("Power: <color={1}><b>{0:P1}</b></color>", Power / maxPower, ToRGBHex(powerColor));
 
 		destinationLabel.text = string.Format("{0:0.00}km to Eden", DistanceRemaining / 1000f);
+
+		for (int i = 0; i < hearts.Length; i++)
+		{
+			hearts[i].enabled = i < player.health;
+		}
 	}
 
 	public void AddToPower(float amount)

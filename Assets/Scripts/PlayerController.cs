@@ -64,7 +64,10 @@ public class PlayerController : MonoBehaviour
 	public float ladderSpeed = 10f;
 	public float maxClimbVelocity = 10f;
 
+	public int health = 3;
+
 	public Collider2D kickCollider;
+	public SpriteRenderer gentlemanRenderer;
 
 	private Animator animator;
 	private Rigidbody2D rb2D;
@@ -73,6 +76,7 @@ public class PlayerController : MonoBehaviour
 	public bool isKicking;
 	public bool goingRight;
 	public bool wentRightInLastFrame;
+	public bool isTakingDamage;
 
 	public Ladder touchingLadders;
 	public bool onLadders;
@@ -98,7 +102,10 @@ public class PlayerController : MonoBehaviour
 	void Update()
 	{
 		if (!GameManager.Instance.IsPlaying)
+		{
+			animator.speed = 1f;
 			return;
+		}
 
 		// control the rotation
 		goingRight = !Input.GetKey(LeftKey);
@@ -237,6 +244,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (other.gameObject.tag == "Ground")
 		{
+			animator.SetTrigger("dead");
 			GameManager.Instance.EndGame(GameManager.EndType.DeathByRailroad);
 		}
 	}
@@ -261,6 +269,35 @@ public class PlayerController : MonoBehaviour
 		{
 			canCarryObject = other.gameObject;
 		}
+	}
+
+	public void TakeDamage()
+	{
+		if (isTakingDamage)
+			return;
+		
+		isTakingDamage = true;
+		health--;
+		if (health == 0)
+		{
+			animator.SetTrigger("dead");
+			GameManager.Instance.EndGame(GameManager.EndType.DeathByMonsters);
+			return;
+		}
+		StartCoroutine(OnTakeDamage());
+	}
+
+	private IEnumerator OnTakeDamage()
+	{
+		gentlemanRenderer.color = Color.white;
+		Go.to(gentlemanRenderer, 0.3f, new GoTweenConfig()
+			.colorProp("color", Color.red)
+			.setIterations(2, GoLoopType.PingPong)
+		);
+
+		yield return new WaitForSeconds(.3f);
+
+		isTakingDamage = false;
 	}
 
 	public void TouchingMonster(GameObject other)
@@ -291,10 +328,12 @@ public class PlayerController : MonoBehaviour
 		}
 		else if (other.tag == "TrainEngine")
 		{
+			animator.SetTrigger("dead");
 			GameManager.Instance.EndGame(GameManager.EndType.DeathInEngine);
 		}
 		else if (other.tag == "Ground")
 		{
+			animator.SetTrigger("dead");
 			GameManager.Instance.EndGame(GameManager.EndType.DeathByRailroad);
 		}
 		else if (other.tag == "DeadMonster")

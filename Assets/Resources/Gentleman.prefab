@@ -170,11 +170,14 @@ MonoBehaviour:
   hitDuration: 0.4
   ladderSpeed: 10
   maxClimbVelocity: 10
+  health: 3
   kickCollider: {fileID: 61000013353918986}
+  gentlemanRenderer: {fileID: 212000011434675854}
   isJumping: 0
   isKicking: 0
   goingRight: 1
   wentRightInLastFrame: 0
+  isTakingDamage: 0
   touchingLadders: {fileID: 0}
   onLadders: 0
   canCarryObject: {fileID: 0}

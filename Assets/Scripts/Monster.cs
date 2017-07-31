@@ -98,6 +98,10 @@ public class Monster : MonoBehaviour
 		{
 			goingRight = !goingRight;
 		}
+		else if (other.gameObject.tag == "Gentleman" && !isKO)
+		{
+			GameManager.Instance.player.TakeDamage();
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -110,13 +114,17 @@ public class Monster : MonoBehaviour
 		{
 			Die();
 		}
-		else if (other.tag == "KickCollider")
-		{
-			GameManager.Instance.player.TouchingMonster(gameObject);
-		}
 		else if (other.gameObject.tag == "MonsterLimit")
 		{
 			goingRight = !goingRight;
+		}
+	}
+
+	void OnCollisionStay2D(Collision2D other)
+	{
+		if (other.gameObject.tag == "Gentleman")
+		{
+			GameManager.Instance.player.TouchingMonster(gameObject);
 		}
 	}
 
