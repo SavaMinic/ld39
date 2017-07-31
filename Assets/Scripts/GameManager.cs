@@ -98,6 +98,8 @@ public class GameManager : MonoBehaviour
 		{
 			paralax[i].SpeedActive(true);
 		}
+
+		lastKDistance = DistanceRemaining - 500f;
 	}
 
 	public static string ToRGBHex(Color c)
@@ -110,6 +112,8 @@ public class GameManager : MonoBehaviour
 		f = Mathf.Clamp01(f);
 		return (byte)(f * 255);
 	}
+
+	private float lastKDistance;
 
 	void Update()
 	{
@@ -132,6 +136,12 @@ public class GameManager : MonoBehaviour
 			{
 				DistanceRemaining = 0f;
 				EndGame(EndType.Win);
+			}
+
+			if (lastKDistance > DistanceRemaining)
+			{
+				lastKDistance = DistanceRemaining - 500f;
+				SpawnerManager.Instance.SpawnMonster();
 			}
 		}
 		else if (State == GameState.End)
