@@ -290,12 +290,21 @@ public class PlayerController : MonoBehaviour
 	private IEnumerator OnTakeDamage()
 	{
 		gentlemanRenderer.color = Color.white;
+
+#if UNITY_WEBGL
+		gentlemanRenderer.color = Color.red;
+#else
 		Go.to(gentlemanRenderer, 0.3f, new GoTweenConfig()
 			.colorProp("color", Color.red)
 			.setIterations(2, GoLoopType.PingPong)
 		);
+#endif
 
 		yield return new WaitForSeconds(.3f);
+
+#if UNITY_WEBGL
+		gentlemanRenderer.color = Color.white;
+#endif
 
 		isTakingDamage = false;
 	}

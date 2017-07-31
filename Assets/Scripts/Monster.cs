@@ -196,13 +196,21 @@ public class Monster : MonoBehaviour
 	public IEnumerator WasHit()
 	{
 		monsterRenderer.color = Color.white;
+
+#if UNITY_WEBGL
+		monsterRenderer.color = Color.red;
+#else
 		Go.to(monsterRenderer, 0.3f, new GoTweenConfig()
 			.colorProp("color", Color.red)
 			.setIterations(2, GoLoopType.PingPong)
 		);
+#endif
 
 		yield return new WaitForSeconds(.3f);
 
+#if UNITY_WEBGL
+		monsterRenderer.color = Color.white;
+#endif
 		canBeHit = true;
 	}
 }
